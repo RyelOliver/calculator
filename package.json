@@ -1,0 +1,23 @@
+{
+  "name": "calculator",
+  "version": "0.0.1",
+  "description": "A web-based API application that evaluates a string expression consisting of non-negative integers and the `+-*/` operators only, considering the normal mathematical rules of operator precedence.",
+  "main": "shared/expression.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "javascript",
+    "jest",
+    "calculator"
+  ],
+  "author": "Ryel Oliver <rmuchunku@gmail.com> (https://github.com/RyelOliver)",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "jest": "^24.9.0"
+  },
+  "dependencies": {}
+}
