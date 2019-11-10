@@ -1,18 +1,18 @@
 const React = require('react');
-const { useState } = React;
+const { useEffect, useState } = React;
 require('./App.scss');
 
 const Integers = [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
 ];
 
 const Operators = [
@@ -26,6 +26,11 @@ module.exports = function App () {
     const [ expression, setExpression ] = useState('');
     const [ value, setValue ] = useState('');
 
+    useEffect(() => {
+        document.addEventListener('keypress', onKeyPress);
+        return () => document.removeEventListener('keypress', onKeyPress);
+    });
+
     const validCharacters = Integers.slice();
     if (/\d$/.test(expression))
         validCharacters.push(...Operators.concat([ '=' ]));
@@ -33,9 +38,16 @@ module.exports = function App () {
     const addCharacterToExpression = character =>
         () => setExpression(`${expression}${character}`);
 
+    const onKeyPress = ({ key }) => {
+        if (!validCharacters.includes(key)) return;
+        if (key === '=') return onSubmit();
+        return addCharacterToExpression(key)();
+    };
+
     const onSubmit = () => {
         fetch(`/calculate?expression=${encodeURIComponent(expression)}`)
-            .then(response => response.json()).then(response => {
+            .then(response => response.json())
+            .then(response => {
                 setValue(response);
                 setExpression(response);
             });
@@ -54,6 +66,7 @@ module.exports = function App () {
                 { character }
             </button>
         );
+
     return (
         <div className="calculator">
             <div className="screen">

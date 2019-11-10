@@ -20,5 +20,3 @@ For example:
 - [x] Calculation considers operator precedence
 - [x] UI to provide input and display output for calculation
 - [] Expression is validated in UI
-- [] UI is accessible
-- [] UI is responsive
