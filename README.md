@@ -18,7 +18,7 @@ For example:
 - [x] API to perform calculation
 - [x] Expression is validated
 - [x] Calculation considers operator precedence
-- [] UI to provide input and display output for calculation
+- [x] UI to provide input and display output for calculation
 - [] Expression is validated in UI
 - [] UI is accessible
 - [] UI is responsive

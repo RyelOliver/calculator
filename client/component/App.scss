@@ -1,0 +1,151 @@
+$black: #333333;
+$darkNavy: #2c3e50;
+$navy: #34495e;
+$darkGrey: #7f8c8d;
+$grey: #95a5a6;
+$darkWhite: #bdc3c7;
+$white: #ecf0f1;
+$green: #2ecc71;
+$fadedGreen: #a4c77b;
+$red: #e74c3c;
+$darkRed: #c0392b;
+
+body {
+    margin: 0;
+
+    @media only screen and (min-width: 512px) {
+        background: $white;
+    }
+}
+
+.calculator {
+    display: grid;
+    grid-template-areas:
+        'screen'
+        'buttons';
+    grid-gap: 16px;
+    max-width: 512px;
+    margin: 0 auto;
+    padding: 16px;
+    background: $navy;
+    color: $white;
+    font-size: 32px;
+
+    @media only screen and (min-width: 512px) {
+        margin: 32px auto;
+        border-radius: 4px; 
+    }
+
+    .screen {
+        grid: 'screen';
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        background: $fadedGreen;
+        border-radius: 4px;
+        color: $black;
+
+        .expression {
+            min-height: 16px;
+            font-size: 16px;
+        }
+        .value {
+            min-height: 32px;
+            font-size: 32px;
+        }
+    }
+
+    .buttons {
+        grid: 'buttons';
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-gap: 8px;
+
+        button {
+            padding: 8px;
+            background: $grey;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: inherit;
+            transition: .2s;
+            
+            &:disabled {
+                color: $darkWhite;
+                opacity: .8;
+            }
+
+            &:not(:disabled) {
+                cursor: pointer;
+                
+                &:focus,
+                &:hover {
+                    background: $darkGrey;
+                }
+            }
+
+            &.integer {
+                &:nth-child(3n-2) {
+                    grid-column: 3;
+                }
+                &:nth-child(3n-1) {
+                    grid-column: 2;
+                }
+                &:nth-child(3n) {
+                    grid-column: 1;
+                }
+
+                &:nth-child(10) {
+                    grid-column: 1;
+                    grid-row: 4;
+                }
+                &:nth-child(-n+9) {
+                    grid-row: 3;
+                }
+                &:nth-child(-n+6) {
+                    grid-row: 2;
+                }
+                &:nth-child(-n+3) {
+                    grid-row: 1;
+                }
+            }
+
+            &.operator {
+                grid-column: 4;
+                background: $darkNavy;
+                font-weight: bold;
+
+                &:focus,
+                &:hover {
+                    background: $black;
+                }
+
+                &:nth-child(11) {
+                    grid-row: 1;
+                }
+                &:nth-child(12) {
+                    grid-row: 2;
+                }
+                &:nth-child(13) {
+                    grid-row: 3;
+                }
+                &:nth-child(14) {
+                    grid-row: 4;
+                }
+            }
+
+            &.equals {
+                grid-column: 2 / 4;
+                grid-row: 4;
+                background: $red;
+                font-weight: bold;
+                
+                &:focus,
+                &:hover {
+                    background: $darkRed;
+                }
+            }
+        }
+    }
+}
