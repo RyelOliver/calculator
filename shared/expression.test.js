@@ -13,6 +13,22 @@ describe('Calculate', () => {
         });
     });
 
+    describe('Operator precedence', () => {
+        it('Should multiply before adding or subtracting', () => {
+            expect(calculate('2+4*2')).toBe(10);
+            expect(calculate('2*4+2')).toBe(10);
+            expect(calculate('2-4*2')).toBe(-6);
+            expect(calculate('2*4-2')).toBe(6);
+        });
+
+        it('Should divide before adding or subtracting', () => {
+            expect(calculate('2+4/2')).toBe(4);
+            expect(calculate('4/2+2')).toBe(4);
+            expect(calculate('2-4/2')).toBe(0);
+            expect(calculate('4/2-2')).toBe(0);
+        });
+    });
+
     describe('Examples', () => {
         it('Should return expected values', () => {
             expect(calculate('4+5*2')).toBe(14);
