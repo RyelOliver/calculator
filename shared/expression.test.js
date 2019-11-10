@@ -3,8 +3,90 @@ const {
     INVALID_OPERATORS,
 
     calculate,
+    evaluate,
+    parse,
     validate,
 } = require('./expression');
+
+describe('Parse', () => {
+    describe('Examples', () => {
+        it('Should parse a string expression into an object expression', () => {
+            expect(parse('4+5*2')).toEqual({
+                operator: '+',
+                left: '4',
+                right: {
+                    operator: '*',
+                    left: '5',
+                    right: '2',
+                },
+            });
+
+            expect(parse('4+5/2')).toEqual({
+                operator: '+',
+                left: '4',
+                right: {
+                    operator: '/',
+                    left: '5',
+                    right: '2',
+                },
+            });
+
+            expect(parse('4+5/2-1')).toEqual({
+                operator: '-',
+                left: {
+                    operator: '+',
+                    left: '4',
+                    right: {
+                        operator: '/',
+                        left: '5',
+                        right: '2',
+                    },
+                },
+                right: '1',
+            });
+        });
+    });
+});
+
+describe('Evaluate', () => {
+    describe('Examples', () => {
+        it('Should evaluate an object expression', () => {
+            expect(evaluate({
+                operator: '+',
+                left: '4',
+                right: {
+                    operator: '*',
+                    left: '5',
+                    right: '2',
+                },
+            })).toBe(14);
+
+            expect(evaluate({
+                operator: '+',
+                left: '4',
+                right: {
+                    operator: '/',
+                    left: '5',
+                    right: '2',
+                },
+            })).toBe(6.5);
+
+            expect(evaluate({
+                operator: '-',
+                left: {
+                    operator: '+',
+                    left: '4',
+                    right: {
+                        operator: '/',
+                        left: '5',
+                        right: '2',
+                    },
+                },
+                right: '1',
+            })).toBe(5.5);
+        });
+    });
+});
 
 describe('Calculate', () => {
     describe('Empty expressions', () => {
