@@ -15,7 +15,7 @@ For example:
 ## Roadmap
 
 - [x] Calculation of example expressions
-- [] API to perform calculation
+- [x] API to perform calculation
 - [] Expression is validated
 - [] Calculation considers operator precedence
 - [] UI to provide input and display output for calculation
