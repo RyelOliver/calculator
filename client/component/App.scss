@@ -6,7 +6,7 @@ $grey: #95a5a6;
 $darkWhite: #bdc3c7;
 $white: #ecf0f1;
 $green: #2ecc71;
-$fadedGreen: #a4c77b;
+$fadedGreen: #d6e87d;
 $red: #e74c3c;
 $darkRed: #c0392b;
 
@@ -92,7 +92,7 @@ body {
                 &:hover {
                     background: $black;
                 }
-                
+
                 &:nth-child(1) {
                     grid-column: 1 / 3;
                 }

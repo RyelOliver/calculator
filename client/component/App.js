@@ -1,5 +1,5 @@
 const React = require('react');
-const { useEffect, useState } = React;
+const { useEffect, useRef, useState } = React;
 require('./App.scss');
 
 const Integers = [
@@ -31,6 +31,12 @@ module.exports = function App () {
         return () => document.removeEventListener('keyup', onKeyUp);
     });
 
+    const refs = {};
+    [ 'DEL', 'AC', ...Integers, ...Operators, '=' ]
+        .forEach(character => {
+            refs[character] = useRef(null);
+        });
+
     const validCharacters = [ 'DEL', 'AC' ].concat(Integers.slice());
     if (/\d$/.test(expression))
         validCharacters.push(...Operators.concat([ '=' ]));
@@ -42,13 +48,27 @@ module.exports = function App () {
     const addCharacterToExpression = character =>
         () => setExpression(`${expression}${character}`);
 
-    const onKeyUp = ({ key }) => {
-        if (key === 'Backspace') return deleteCharacterFromExpression();
-        if (key === 'Delete') return clearExpression();
+    const characterPressed = character => {
+        if (!validCharacters.includes(character)) return;
 
-        if (!validCharacters.includes(key)) return;
-        if (key === '=') return onSubmit();
-        return addCharacterToExpression(key)();
+        refs[character].current.focus();
+        switch (character) {
+            case '=':
+                return onSubmit();
+            case 'DEL':
+                return deleteCharacterFromExpression();
+            case 'AC':
+                return clearExpression();
+            default:
+                return addCharacterToExpression(character)();
+        }
+    };
+
+    const onKeyUp = ({ key }) => {
+        let character = key;
+        if (key === 'Backspace') character = 'DEL';
+        if (key === 'Delete') character = 'AC';
+        characterPressed(character);
     };
 
     const onSubmit = () => {
@@ -77,6 +97,7 @@ module.exports = function App () {
         character => (
             <button
                 key={character}
+                ref={refs[character]}
                 className={className}
                 onClick={onClick(character)}
                 disabled={!validCharacters.includes(character)}
