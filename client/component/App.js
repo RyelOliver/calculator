@@ -27,18 +27,25 @@ module.exports = function App () {
     const [ value, setValue ] = useState('');
 
     useEffect(() => {
-        document.addEventListener('keypress', onKeyPress);
-        return () => document.removeEventListener('keypress', onKeyPress);
+        document.addEventListener('keyup', onKeyUp);
+        return () => document.removeEventListener('keyup', onKeyUp);
     });
 
-    const validCharacters = Integers.slice();
+    const validCharacters = [ 'DEL', 'AC' ].concat(Integers.slice());
     if (/\d$/.test(expression))
         validCharacters.push(...Operators.concat([ '=' ]));
+
+    const deleteCharacterFromExpression =
+        () => setExpression(expression.substring(0, expression.length - 1));
+    const clearExpression = () => setExpression('');
 
     const addCharacterToExpression = character =>
         () => setExpression(`${expression}${character}`);
 
-    const onKeyPress = ({ key }) => {
+    const onKeyUp = ({ key }) => {
+        if (key === 'Backspace') return deleteCharacterFromExpression();
+        if (key === 'Delete') return clearExpression();
+
         if (!validCharacters.includes(key)) return;
         if (key === '=') return onSubmit();
         return addCharacterToExpression(key)();
@@ -53,14 +60,25 @@ module.exports = function App () {
             });
     };
 
+    const onClick = character => {
+        switch (character) {
+            case '=':
+                return onSubmit;
+            case 'DEL':
+                return deleteCharacterFromExpression;
+            case 'AC':
+                return clearExpression;
+            default:
+                return addCharacterToExpression(character);
+        }
+    };
+
     const renderButton = className =>
         character => (
             <button
                 key={character}
                 className={className}
-                onClick={character === '=' ?
-                    onSubmit :
-                    addCharacterToExpression(character)}
+                onClick={onClick(character)}
                 disabled={!validCharacters.includes(character)}
             >
                 { character }
@@ -74,6 +92,7 @@ module.exports = function App () {
                 <code className="value">{ value }</code>
             </div>
             <div className="buttons">
+                {[ 'DEL', 'AC' ].map(renderButton('delete'))}
                 {Integers.slice().reverse().map(renderButton('integer'))}
                 {Operators.map(renderButton('operator'))}
                 {[ '=' ].map(renderButton('equals'))}
