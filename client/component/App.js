@@ -23,6 +23,7 @@ const Operators = [
 ];
 
 module.exports = function App () {
+    const [ loading, setLoading ] = useState(false);
     const [ expression, setExpression ] = useState('');
     const [ value, setValue ] = useState('');
 
@@ -72,11 +73,17 @@ module.exports = function App () {
     };
 
     const onSubmit = () => {
+        setLoading(true);
         fetch(`/calculate?expression=${encodeURIComponent(expression)}`)
             .then(response => response.json())
             .then(response => {
                 setValue(response);
                 setExpression(response);
+                setLoading(false);
+            })
+            .catch(() => {
+                console.error(`${expression} is invalid.`);
+                setLoading(false);
             });
     };
 
@@ -98,9 +105,9 @@ module.exports = function App () {
             <button
                 key={character}
                 ref={refs[character]}
-                className={className}
+                className={loading ? `${className} loading` : className}
                 onClick={onClick(character)}
-                disabled={!validCharacters.includes(character)}
+                disabled={loading || !validCharacters.includes(character)}
             >
                 { character }
             </button>

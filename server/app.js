@@ -19,7 +19,7 @@ app.get('/calculate', (req, res) => {
     const { expression } = req.query;
     const { valid } = validate(expression);
     if (!valid) {
-        res.sendStatus(418);
+        res.sendStatus(400);
     } else {
         res.send(calculate(expression).toString());
     }
