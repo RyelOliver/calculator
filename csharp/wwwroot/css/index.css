@@ -1,0 +1,106 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	--black: #333333;
+	--darkNavy: #2c3e50;
+	--navy: #34495e;
+	--darkGrey: #7f8c8d;
+	--grey: #95a5a6;
+	--darkWhite: #bdc3c7;
+	--white: #ecf0f1;
+	--green: #2ecc71;
+	--fadedGreen: #d6e87d;
+	--red: #e74c3c;
+	--darkRed: #c0392b;
+	--faded: rgba(0, 0, 0, 0.2);
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 10px;
+}
+
+body {
+	margin: 0;
+	background-color: var(--white);
+}
+
+.calculator {
+	display: flex;
+    max-width: 51.2rem;
+	margin: 3.2rem auto;
+    padding: 1.6rem;
+	background-color: var(--navy);
+	color: var(--white);
+    border-radius: 0.4rem;
+	font-size: 3.2rem;
+}
+
+.screen {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0.8rem;
+	background-color: var(--fadedGreen);
+	color: var(--black);
+	border-radius: 0.4rem;
+	transition: 0.2s;
+}
+
+.screen > .expression {
+	min-height: 16px;
+	font-size: 16px;
+}
+
+.screen > input[type="text"].expression {
+	background: transparent;
+	border: none;
+}
+
+.screen > input[type="text"].expression:focus {
+	outline: none;
+}
+
+.screen:focus-within {
+	background-color: #ebf5b5;
+}
+
+.screen > .value {
+	min-height: 32px;
+	font-size: 32px;
+}
+
+.buttons {
+	margin: 0 0 0 1.6rem;
+}
+
+.buttons > button {
+	position: relative;
+	height: 100%;
+	padding: 0.8rem;
+	background: var(--grey);
+	border: none;
+	border-radius: 0.4rem;
+	color: white;
+	font-size: inherit;
+	outline: none;
+	transition: 0.2s;
+}
+
+.buttons > button:not(:disabled) {
+	cursor: pointer;
+}
+
+.buttons > button:not(:disabled):focus,
+.buttons > button:not(:disabled):hover {
+	box-shadow: 0 0 0 0.2rem var(--red) inset;
+}
+
+.buttons > button.equals {
+	background-color: var(--red);
+	font-weight: bold;
+}
+
+.buttons > button.equals:not(:disabled):focus,
+.buttons > button.equals:not(:disabled):hover {
+	background-color: var(--darkRed);
+}

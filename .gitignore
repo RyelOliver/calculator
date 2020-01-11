@@ -1,6 +1,9 @@
 .cache/
+.vs/
 .vscode/
+bin/
 coverage/
 dist/
 node_modules/
+obj/
 public/
